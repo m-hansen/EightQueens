@@ -53,10 +53,10 @@ int main(int argc, char* argv[])
 
 void Render(sf::RenderWindow* window, Grid* grid)
 {
-	window->clear();
+	window->clear(sf::Color::White);
 
 	// Draw the grid
-	for (int i = 0; i < grid->GetTiles()->size(); i++)
+	//for (int i = 0; i < grid->GetTiles()->size(); i++)
 	{
 		//window->draw(grid->GetTiles()->at(i).boundingRect);
 	}

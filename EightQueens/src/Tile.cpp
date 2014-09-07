@@ -19,7 +19,6 @@ void Tile::Render(sf::RenderWindow* window)
 	if (isOccupied)
 	{
 		window->draw(sprite);
-		//boundingRect.setTexture(sprite.getTexture());
 	}
 }
 

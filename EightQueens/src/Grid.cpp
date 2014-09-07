@@ -2,7 +2,7 @@
 
 Grid::Grid()
 {
-	defaultTileColor = sf::Color::White;
+	defaultTileColor = sf::Color::Transparent;
 }
 
 Grid::~Grid()
@@ -48,6 +48,7 @@ void Grid::CreateGrid(ResourceManager* rm, int width, int height)
 			tileList.push_back(tile);
 			tileList.back().sprite.setTexture(*rm->GetTexture("resources/crown.jpg"));
 			tileList.back().sprite.setPosition(sf::Vector2<float>(tile.GetPosition()));
+			//tileList.back().boundingRect.setTexture(tileList.back().sprite.getTexture());
 		}
 	}
 }
@@ -99,7 +100,17 @@ void Grid::Render(sf::RenderWindow* window)
 {
 	for (std::vector<Tile>::iterator it = tileList.begin(); it != tileList.end(); ++it)
 	{
-		it->Render(window);
+		if (it->IsOccupied())
+		{
+			window->draw(it->sprite);
+			//it->boundingRect.setTexture(it->sprite.getTexture());
+		}
+
+		//it->boundingRect.setTexture(it->sprite.getTexture());
+		//it->boundingRect.i
+		//if (!it->IsOccupied()) it->boundingRect.setTexture(NULL);
+		//else it->boundingRect.setTexture(it->sprite.getTexture());
+		//window->draw(it->boundingRect);
 	}
 }
 
@@ -108,7 +119,7 @@ void Grid::HandleMouseClick(sf::Event* event, sf::RenderWindow* window)
 	// Check which grid space
 	Tile* tile = GetMouseTileLocation(window);
 
-	if (event->mouseButton.button == sf::Mouse::Left)
+	if (tile != NULL && event->mouseButton.button == sf::Mouse::Left)
 	{
 		if (tile->IsOccupied())
 		{
