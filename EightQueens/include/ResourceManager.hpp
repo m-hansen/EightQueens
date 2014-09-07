@@ -7,7 +7,7 @@ class ResourceManager
 public:
 	ResourceManager();
 	~ResourceManager();
-	sf::Texture GetTexture(const std::string& filename);
+	sf::Texture* GetTexture(const std::string& filename);
 private:
 	// key = filename, value = texture;
 	std::map<std::string, sf::Texture> textureMap;

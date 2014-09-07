@@ -14,34 +14,12 @@ Tile::~Tile()
 {
 }
 
-void Tile::TempFix()
-{
-	sprite.setTexture(texture);
-}
-
-void Tile::LoadResources()
-{
-	std::string textName = "resources/crown.jpg";
-	if (!texture.loadFromFile(textName))
-	{
-		// error
-		fprintf(stdout, "Error loading %s\n", textName.c_str());
-	}
-
-	sprite.setTexture(texture);
-	const int spriteWidth = 100;
-	float factor = size / spriteWidth;
-	sprite.setScale(factor, factor);
-	//sprite.setColor(sf::Color::Black);
-	//sprite.setTextureRect(sf::IntRect(100, 100, 320, 320));
-}
-
 void Tile::Render(sf::RenderWindow* window)
 {
 	if (isOccupied)
 	{
-		sprite.setPosition(position);
 		window->draw(sprite);
+		//boundingRect.setTexture(sprite.getTexture());
 	}
 }
 

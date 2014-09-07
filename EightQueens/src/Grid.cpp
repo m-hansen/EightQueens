@@ -31,7 +31,7 @@ void Grid::CreateGrid(ResourceManager* rm, int width, int height)
 	// Set up the template for each location in the grid
 	Tile tile;
 	tile.size = size;
-	tile.LoadResources();
+	//tile.LoadResources();
 	
 	sf::RectangleShape tileRect(sf::Vector2f(size, size));
 	tileRect.setFillColor(defaultTileColor);
@@ -46,7 +46,8 @@ void Grid::CreateGrid(ResourceManager* rm, int width, int height)
 		{
 			tile.SetPosition(j * size, i * size);
 			tileList.push_back(tile);
-			tileList.back().sprite.setTexture(rm->GetTexture("resources/crown.jpg"));
+			tileList.back().sprite.setTexture(*rm->GetTexture("resources/crown.jpg"));
+			tileList.back().sprite.setPosition(sf::Vector2<float>(tile.GetPosition()));
 		}
 	}
 }

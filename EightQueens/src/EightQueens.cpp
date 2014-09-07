@@ -10,7 +10,9 @@ int main(int argc, char* argv[])
 	sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Eight Queens");
 
 	ResourceManager resourceManager;
-	//resourceManager.GetTexture("resources/crown.jpg");
+	sf::Texture* tempTexture = resourceManager.GetTexture("resources/crown.jpg");
+	sf::Sprite tempSprite;
+	tempSprite.setTexture(*tempTexture);
 
 	// Create an 8x8 Grid
 	Grid grid;
@@ -56,7 +58,7 @@ void Render(sf::RenderWindow* window, Grid* grid)
 	// Draw the grid
 	for (int i = 0; i < grid->GetTiles()->size(); i++)
 	{
-		window->draw(grid->GetTiles()->at(i).boundingRect);
+		//window->draw(grid->GetTiles()->at(i).boundingRect);
 	}
 
 	grid->Render(window);

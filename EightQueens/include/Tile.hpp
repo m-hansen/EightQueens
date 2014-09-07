@@ -17,10 +17,9 @@ public:
 	void SetColor(sf::Color c);
 	float size;
 	sf::RectangleShape boundingRect;
-	void TempFix();sf::Sprite sprite;
-private:
 	sf::Texture texture;
-	
+	sf::Sprite sprite;
+private:
 	bool isOccupied;
 	sf::Vector2<float> position;
 };
