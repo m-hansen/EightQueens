@@ -17,6 +17,7 @@ public:
 	void SetColor(sf::Color c);
 	float size;
 	sf::RectangleShape boundingRect;
+	sf::CircleShape marker;
 	sf::Texture texture;
 	sf::Sprite sprite;
 private:

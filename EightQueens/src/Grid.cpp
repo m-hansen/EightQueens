@@ -2,7 +2,7 @@
 
 Grid::Grid()
 {
-	defaultTileColor = sf::Color::Transparent;
+	defaultTileColor = sf::Color::White;
 }
 
 Grid::~Grid()
@@ -100,17 +100,7 @@ void Grid::Render(sf::RenderWindow* window)
 {
 	for (std::vector<Tile>::iterator it = tileList.begin(); it != tileList.end(); ++it)
 	{
-		if (it->IsOccupied())
-		{
-			window->draw(it->sprite);
-			//it->boundingRect.setTexture(it->sprite.getTexture());
-		}
-
-		//it->boundingRect.setTexture(it->sprite.getTexture());
-		//it->boundingRect.i
-		//if (!it->IsOccupied()) it->boundingRect.setTexture(NULL);
-		//else it->boundingRect.setTexture(it->sprite.getTexture());
-		//window->draw(it->boundingRect);
+		it->Render(window);
 	}
 }
 

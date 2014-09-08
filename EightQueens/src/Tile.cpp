@@ -6,6 +6,10 @@ Tile::Tile()
 	boundingRect.setFillColor(sf::Color::White);
 	boundingRect.setOutlineColor(sf::Color::Black);
 	boundingRect.setOutlineThickness(1.0f);
+	marker.setRadius(size/3);
+	marker.setFillColor(sf::Color::Green);
+	marker.setOutlineColor(sf::Color::Black);
+	marker.setOutlineThickness(1.0f);
 	isOccupied = false;
 	size = 0.0f;
 }
@@ -16,6 +20,7 @@ Tile::~Tile()
 
 void Tile::Render(sf::RenderWindow* window)
 {
+	window->draw(boundingRect);
 	if (isOccupied)
 	{
 		window->draw(sprite);
