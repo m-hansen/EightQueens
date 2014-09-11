@@ -3,8 +3,6 @@
 #include "Grid.hpp"
 #include "ResourceManager.hpp"
 
-#include "Queen.hpp"
-
 void Render(sf::RenderWindow* window, ResourceManager* rm, Grid* grid);
 
 int main(int argc, char* argv[])

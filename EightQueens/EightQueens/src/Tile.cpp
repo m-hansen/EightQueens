@@ -53,9 +53,9 @@ sf::Color Tile::GetColor()
 	return color;
 }
 
-void Tile::SetColor(sf::Color color)
+void Tile::SetColor(sf::Color c)
 {
-	boundingRect.setFillColor(color);
-	sprite.setColor(color);
-	color = color;
+	boundingRect.setFillColor(c);
+	//sprite.setColor(c);
+	color = c;
 }

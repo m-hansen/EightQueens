@@ -55,7 +55,7 @@ void Grid::CreateGrid(ResourceManager* rm, int width, int height)
 			fprintf(stdout, "id = %d\n", tile.id);
 			tile.SetPosition(j * tileSize, i * tileSize);
 			tileList.push_back(tile);
-			tileList.back().sprite.setTexture(*rm->GetTexture("resources/crown.jpg"));
+			tileList.back().sprite.setTexture(*rm->GetTexture("resources/crown.png"));
 			tileList.back().sprite.setPosition(sf::Vector2<float>(tile.GetPosition()));
 			tileMap.insert(std::make_pair(tileList.back().id, &tileList.back()));
 			count++;
@@ -210,12 +210,12 @@ void Grid::Update(sf::RenderWindow* window)
 			mousePosY < (cellPosY + size) && mousePosY > cellPosY)
 		{
 			it->boundingRect.setFillColor(sf::Color(60, 200, 255));
-			it->sprite.setColor(sf::Color(60, 200, 255));
+			//it->sprite.setColor(sf::Color(60, 200, 255));
 		}
 		else
 		{
 			it->boundingRect.setFillColor(it->GetColor());
-			it->sprite.setColor(it->GetColor());
+			//it->sprite.setColor(it->GetColor());
 		}
 	}
 }
@@ -257,13 +257,14 @@ void Grid::HandleMouseClick(sf::Event* event, sf::RenderWindow* window)
 		if (tile->IsOccupied())
 		{
 			tile->SetAsOccupied(false);
+			tile->SetColor(sf::Color::White);
 		}
 		else
 		{
 			tile->SetAsOccupied(true);
 			if (!IsValidMove(tile->id))
 			{
-				tile->SetColor(sf::Color::Red);
+				tile->SetColor(sf::Color(255, 100, 100));
 				fprintf(stdout, "Not a valid move!\n");
 			}
 		}
