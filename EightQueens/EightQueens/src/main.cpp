@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
 
 	// Create an 8x8 Grid
 	Grid grid;
-	grid.CreateGrid(&resourceManager, 8, 8);
+	grid.CreateGrid(&resourceManager, 8);
 
 	// Main loop
 	while (window.isOpen())
@@ -37,6 +37,18 @@ int main(int argc, char* argv[])
 
 				case sf::Event::MouseButtonPressed:
 					grid.HandleMouseClick(&event, &window);
+					break;
+
+				case sf::Event::KeyPressed:
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+					{
+						window.close();
+					}
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+					{
+						fprintf(stdout, "Space pressed\n");
+						grid.ClearQueens();
+					}
 					break;
 
 				default:

@@ -2,16 +2,15 @@
 
 Tile::Tile()
 {
+	id = -1;
+	fprintf(stdout, "Tile id = %d\n", id);
 	boundingRect.setSize(sf::Vector2<float>(size,size));
 	boundingRect.setFillColor(sf::Color::White);
 	boundingRect.setOutlineColor(sf::Color::Black);
 	boundingRect.setOutlineThickness(1.0f);
-	marker.setRadius(size/3);
-	marker.setFillColor(sf::Color::Green);
-	marker.setOutlineColor(sf::Color::Black);
-	marker.setOutlineThickness(1.0f);
 	isOccupied = false;
 	size = 0.0f;
+	color = sf::Color::White;
 }
 
 Tile::~Tile()
@@ -49,12 +48,14 @@ void Tile::SetPosition(float x, float y)
 	boundingRect.setPosition(position);
 }
 
-//sf::Color Tile::GetColor()
-//{
-//	return color;
-//}
+sf::Color Tile::GetColor()
+{
+	return color;
+}
 
 void Tile::SetColor(sf::Color color)
 {
 	boundingRect.setFillColor(color);
+	sprite.setColor(color);
+	color = color;
 }

@@ -17,10 +17,12 @@ public:
 	void SetColor(sf::Color c);
 	float size;
 	sf::RectangleShape boundingRect;
-	sf::CircleShape marker;
 	sf::Texture texture;
 	sf::Sprite sprite;
+	int id;
 private:
+	sf::Text tileIdText;
+	sf::Color color;
 	bool isOccupied;
 	sf::Vector2<float> position;
 };
