@@ -68,37 +68,53 @@ void Grid::ClearQueens()
 	for (std::vector<Tile>::iterator it = tileList.begin(); it != tileList.end(); ++it)
 	{
 		it->SetAsOccupied(false);
+		it->SetColor(sf::Color::White);
 	}
 }
 
-//bool Grid::Solve(const int tileId)
-//{
-//	Clear();
-//
-//	// if we have tried the last col
-//	if ((tileId % size) >= size)
-//	{
-//		return true;
-//	}
-//	
-//	
-//
-//	// Current col
-//	for (int i = 0; i < size; i++)
-//	{
-//		
-//		if (IsValidMove(tileId))
-//		{
-//			
-//		}
-//	}
-//
-//	int queensPlaced = 0;
-//	if (queensPlaced < numQueens)
-//	{
-//		PlaceQueen();
-//	}
-//}
+bool Grid::Solve(sf::RenderWindow* window)
+{
+	ClearQueens();
+	return SolveRecursive(0, window);
+}
+
+bool Grid::SolveRecursive(int col, sf::RenderWindow* window)
+{
+	// Return true if all queens have been placed
+	if (col >= size)
+	{
+		return true;
+	}
+
+	// for each row
+	for (int i = 0; i < size*size; i += size)
+	{
+		if (IsValidMove(col + i))
+		{
+			
+			//add queen to this boardId
+			fprintf(stdout, "Adding queen at %d\n", col+i);
+			tileList.at(col+i).SetAsOccupied(true);
+			tileList.at(col+i).Render(window);
+			//Sleep(100);
+
+			// Recursively solve
+			if (SolveRecursive(col+1, window))
+			{
+				return true;
+			}
+		}
+
+		// backtrack
+		fprintf(stdout, "Removing queen at %d\n", col+i);
+		tileList.at(col+i).SetAsOccupied(false);
+		tileList.at(col+i).Render(window);
+		//Sleep(100);
+	}
+
+	// The queen could not be placed
+	return false;
+}
 
 bool Grid::IsValidMove(const int tileId)
 {

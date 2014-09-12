@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <Windows.h>
+#include <process.h>
 #include "Global.hpp"
 #include "ResourceManager.hpp"
 #include "Tile.hpp"
@@ -14,7 +16,8 @@ public:
 	void CreateGrid(ResourceManager* rm, int size);
 	void CreateGrid(ResourceManager* rm, int width, int height);
 	void ClearQueens();
-	void Solve();
+	bool Solve(sf::RenderWindow* window);
+	bool SolveRecursive(int col, sf::RenderWindow* window);
 	void Update(sf::RenderWindow* window);
 	void Render(sf::RenderWindow* window);
 	Tile* GetMouseTileLocation(sf::RenderWindow* window);

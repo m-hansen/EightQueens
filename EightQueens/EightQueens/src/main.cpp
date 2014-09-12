@@ -45,7 +45,7 @@ int main(int argc, char* argv[])
 					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 					{
 						fprintf(stdout, "Space pressed\n");
-						grid.ClearQueens();
+						grid.Solve(&window);
 					}
 					break;
 
