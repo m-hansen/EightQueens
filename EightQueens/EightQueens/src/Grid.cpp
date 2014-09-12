@@ -57,6 +57,7 @@ void Grid::CreateGrid(ResourceManager* rm, int width, int height)
 			tileList.push_back(tile);
 			tileList.back().sprite.setTexture(*rm->GetTexture("resources/crown.png"));
 			tileList.back().sprite.setPosition(sf::Vector2<float>(tile.GetPosition()));
+			tileList.back().sprite.setScale(tileSize/100,tileSize/100);
 			tileMap.insert(std::make_pair(tileList.back().id, &tileList.back()));
 			count++;
 		}

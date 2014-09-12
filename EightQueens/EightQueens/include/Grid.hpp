@@ -1,8 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include <vector>
 #include <Windows.h>
-#include <process.h>
+#include <vector>
 #include "Global.hpp"
 #include "ResourceManager.hpp"
 #include "Tile.hpp"

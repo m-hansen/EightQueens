@@ -1,4 +1,7 @@
+#pragma once
 #include <SFML/Graphics.hpp>
+#include <Windows.h>
+#include <process.h>
 #include "Global.hpp"
 #include "Grid.hpp"
 #include "ResourceManager.hpp"
@@ -27,7 +30,7 @@ int main(int argc, char* argv[])
 	ResourceManager resourceManager;
 
 	// Create an 8x8 Grid
-	grid.CreateGrid(&resourceManager, 20);
+	grid.CreateGrid(&resourceManager, 8);
 	isSolutionRunning = false;
 	isSolutionPaused = false;
 
@@ -58,7 +61,7 @@ int main(int argc, char* argv[])
 
 					else
 					{
-						fprintf(stdout, "Solution in progress - cannot modify board\n");
+						fprintf(stdout, "Cannot modify board until solution is finished\n");
 					}
 
 					break;
