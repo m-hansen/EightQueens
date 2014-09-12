@@ -90,23 +90,32 @@ bool Grid::SolveRecursive(int col, sf::RenderWindow* window)
 	// for each row
 	for (int i = 0; i < size*size; i += size)
 	{
+		const int sleepTime = 100; // in ms
+
 		//add queen to this boardId
 		fprintf(stdout, "Adding queen at %d\n", col+i);
 		tileList.at(col+i).SetAsOccupied(true);
-		Sleep(100);
+
 		if (IsValidMove(col + i))
 		{
+			Sleep(sleepTime);
 			// Recursively solve
 			if (SolveRecursive(col+1, window))
 			{
 				return true;
 			}
 		}
+		else
+		{
+			tileList.at(col+i).SetColor(sf::Color(255, 100, 100));
+			Sleep(sleepTime);
+		}
 
 		// backtrack
 		fprintf(stdout, "Removing queen at %d\n", col+i);
+		tileList.at(col+i).SetColor(sf::Color::White);
 		tileList.at(col+i).SetAsOccupied(false);
-		Sleep(100);
+		Sleep(sleepTime);
 	}
 
 	// The queen could not be placed
