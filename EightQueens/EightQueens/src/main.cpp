@@ -3,7 +3,9 @@
 #include "Grid.hpp"
 #include "ResourceManager.hpp"
 
-void Render(sf::RenderWindow* window, ResourceManager* rm, Grid* grid);
+Grid grid;
+
+void threadEntry(void *arg);
 
 int main(int argc, char* argv[])
 {
@@ -12,7 +14,6 @@ int main(int argc, char* argv[])
 	ResourceManager resourceManager;
 
 	// Create an 8x8 Grid
-	Grid grid;
 	grid.CreateGrid(&resourceManager, 8);
 
 	// Main loop
@@ -45,7 +46,8 @@ int main(int argc, char* argv[])
 					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 					{
 						fprintf(stdout, "Space pressed\n");
-						grid.Solve(&window);
+						_beginthread(threadEntry, 0, &window);
+						//grid.Solve(&window);
 					}
 					break;
 
@@ -61,4 +63,10 @@ int main(int argc, char* argv[])
 	}
 
 	return 0;
+}
+
+void threadEntry(void* window)
+{
+	fprintf(stdout, "Spawning a new thread to solve the grid\n");
+	grid.Solve((sf::RenderWindow*)window);
 }
