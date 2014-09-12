@@ -89,15 +89,12 @@ bool Grid::SolveRecursive(int col, sf::RenderWindow* window)
 	// for each row
 	for (int i = 0; i < size*size; i += size)
 	{
+		//add queen to this boardId
+		fprintf(stdout, "Adding queen at %d\n", col+i);
+		tileList.at(col+i).SetAsOccupied(true);
+		Sleep(100);
 		if (IsValidMove(col + i))
 		{
-			
-			//add queen to this boardId
-			fprintf(stdout, "Adding queen at %d\n", col+i);
-			tileList.at(col+i).SetAsOccupied(true);
-			tileList.at(col+i).Render(window);
-			Sleep(100);
-
 			// Recursively solve
 			if (SolveRecursive(col+1, window))
 			{
@@ -108,7 +105,6 @@ bool Grid::SolveRecursive(int col, sf::RenderWindow* window)
 		// backtrack
 		fprintf(stdout, "Removing queen at %d\n", col+i);
 		tileList.at(col+i).SetAsOccupied(false);
-		tileList.at(col+i).Render(window);
 		Sleep(100);
 	}
 

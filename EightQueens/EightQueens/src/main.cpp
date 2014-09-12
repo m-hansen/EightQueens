@@ -4,8 +4,21 @@
 #include "ResourceManager.hpp"
 
 Grid grid;
+/*
+Note: the two solution booleans are not connected to each other
 
-void threadEntry(void *arg);
+isSolutionRunning is true if the solution has been started
+but not completed (it is true even if the solution is paused)
+
+isSolutionPaused is only to determine if the solution should
+actively work or temporarily pause
+*/
+bool isSolutionRunning; // true if stated and not finished
+bool isSolutionPaused; // true if paused
+HANDLE solutionHandle;
+
+void ThreadEntry(void *arg);
+void HandleSolutionPause();
 
 int main(int argc, char* argv[])
 {
@@ -14,7 +27,9 @@ int main(int argc, char* argv[])
 	ResourceManager resourceManager;
 
 	// Create an 8x8 Grid
-	grid.CreateGrid(&resourceManager, 8);
+	grid.CreateGrid(&resourceManager, 20);
+	isSolutionRunning = false;
+	isSolutionPaused = false;
 
 	// Main loop
 	while (window.isOpen())
@@ -35,20 +50,40 @@ int main(int argc, char* argv[])
 					break;
 
 				case sf::Event::MouseButtonPressed:
-					grid.HandleMouseClick(&event, &window);
+
+					if (!isSolutionRunning)
+					{
+						grid.HandleMouseClick(&event, &window);
+					}
+
+					else
+					{
+						fprintf(stdout, "Solution in progress - cannot modify board\n");
+					}
+
 					break;
 
 				case sf::Event::KeyPressed:
+
 					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 					{
 						window.close();
 					}
+
 					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 					{
-						fprintf(stdout, "Space pressed\n");
-						_beginthread(threadEntry, 0, &window);
-						//grid.Solve(&window);
+						if (!isSolutionRunning)
+						{
+							solutionHandle = (HANDLE)_beginthread(ThreadEntry, 0, &window);
+						}
+						else
+						{
+							// If we have already started solving the grid
+							// treat this as a pause or resume
+							HandleSolutionPause();
+						}
 					}
+
 					break;
 
 				default:
@@ -65,8 +100,26 @@ int main(int argc, char* argv[])
 	return 0;
 }
 
-void threadEntry(void* window)
+void ThreadEntry(void* window)
 {
+	isSolutionRunning = true;
 	fprintf(stdout, "Spawning a new thread to solve the grid\n");
 	grid.Solve((sf::RenderWindow*)window);
+	isSolutionRunning = false;
+}
+
+void HandleSolutionPause()
+{
+	if (isSolutionPaused)
+	{
+		fprintf(stdout, "-SOLUTION UNPAUSED-\n");
+		isSolutionPaused = false;
+		ResumeThread(solutionHandle);
+	}
+	else
+	{
+		fprintf(stdout, "-SOLUTION PAUSED-\n");
+		isSolutionPaused = true;
+		SuspendThread(solutionHandle);
+	}
 }
