@@ -11,7 +11,7 @@ class Grid
 public:
 	Grid();
 	~Grid();
-	std::vector<Tile>* Grid::GetTiles();
+	std::vector<Tile>* GetTiles();
 	void CreateGrid(ResourceManager* rm, int size);
 	void CreateGrid(ResourceManager* rm, int width, int height);
 	void ClearQueens();
@@ -21,6 +21,7 @@ public:
 	void Render(sf::RenderWindow* window);
 	Tile* GetMouseTileLocation(sf::RenderWindow* window);
 	void HandleMouseClick(sf::Event* event, sf::RenderWindow* window);
+	void ValidateAllTiles();
 private:
 	int size;
 	std::vector<Tile> tileList;

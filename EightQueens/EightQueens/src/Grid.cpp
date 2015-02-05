@@ -261,6 +261,9 @@ Tile* Grid::GetMouseTileLocation(sf::RenderWindow* window)
 	return NULL;
 }
 
+/**
+ * Render the grid.
+ */
 void Grid::Render(sf::RenderWindow* window)
 {
 	for (std::vector<Tile>::iterator it = tileList.begin(); it != tileList.end(); ++it)
@@ -269,6 +272,9 @@ void Grid::Render(sf::RenderWindow* window)
 	}
 }
 
+/**
+ * Place a mark on the tile that was clicked.
+ */
 void Grid::HandleMouseClick(sf::Event* event, sf::RenderWindow* window)
 {
 	// Check which grid space
@@ -279,20 +285,51 @@ void Grid::HandleMouseClick(sf::Event* event, sf::RenderWindow* window)
 		if (tile->IsOccupied())
 		{
 			tile->SetAsOccupied(false);
-			tile->SetColor(sf::Color::White);
+			//tile->SetColor(sf::Color::White);
+			
 		}
 		else
 		{
 			tile->SetAsOccupied(true);
 			if (!IsValidMove(tile->id))
 			{
-				tile->SetColor(sf::Color(255, 100, 100));
+				//tile->SetColor(sf::Color(255, 100, 100));
 				fprintf(stdout, "Not a valid move!\n");
 			}
+		}
+
+		ValidateAllTiles();
+	}
+}
+
+/**
+ * Checks each occupied tile to see if it is valid. If it is invalid, highlight the tile in red.
+ */
+void Grid::ValidateAllTiles()
+{
+	for (std::vector<Tile>::iterator it = tileList.begin(); it != tileList.end(); ++it)
+	{
+		if (it->IsOccupied())
+		{
+			if (IsValidMove(it->id))
+			{
+				it->SetColor(sf::Color::White);
+			}
+			else
+			{
+				it->SetColor(sf::Color(255, 100, 100));
+			}
+		}
+		else
+		{
+			it->SetColor(sf::Color::White);
 		}
 	}
 }
 
+/**
+ * Returns all tiles
+ */
 std::vector<Tile>* Grid::GetTiles()
 {
 	return &tileList;

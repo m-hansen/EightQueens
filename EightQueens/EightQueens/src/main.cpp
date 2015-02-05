@@ -7,16 +7,7 @@
 #include "ResourceManager.hpp"
 
 Grid grid;
-/*
-Note: the two solution booleans are not connected to each other
-
-isSolutionRunning is true if the solution has been started
-but not completed (it is true even if the solution is paused)
-
-isSolutionPaused is only to determine if the solution should
-actively work or temporarily pause
-*/
-bool isSolutionRunning; // true if stated and not finished
+bool wasSolutionStarted; // true if stated and not finished
 bool isSolutionPaused; // true if paused
 HANDLE solutionHandle;
 
@@ -31,7 +22,7 @@ int main(int argc, char* argv[])
 
 	// Create an 8x8 Grid
 	grid.CreateGrid(&resourceManager, 8);
-	isSolutionRunning = false;
+	wasSolutionStarted = false;
 	isSolutionPaused = false;
 
 	// Main loop
@@ -54,7 +45,7 @@ int main(int argc, char* argv[])
 
 				case sf::Event::MouseButtonPressed:
 
-					if (!isSolutionRunning)
+					if (!wasSolutionStarted)
 					{
 						grid.HandleMouseClick(&event, &window);
 					}
@@ -75,7 +66,7 @@ int main(int argc, char* argv[])
 
 					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 					{
-						if (!isSolutionRunning)
+						if (!wasSolutionStarted)
 						{
 							solutionHandle = (HANDLE)_beginthread(ThreadEntry, 0, &window);
 						}
@@ -105,10 +96,10 @@ int main(int argc, char* argv[])
 
 void ThreadEntry(void* window)
 {
-	isSolutionRunning = true;
+	wasSolutionStarted = true;
 	fprintf(stdout, "Spawning a new thread to solve the grid\n");
 	grid.Solve((sf::RenderWindow*)window);
-	isSolutionRunning = false;
+	wasSolutionStarted = false;
 }
 
 void HandleSolutionPause()
