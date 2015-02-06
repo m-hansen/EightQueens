@@ -69,7 +69,7 @@ void Grid::ClearQueens()
 	for (std::vector<Tile>::iterator it = tileList.begin(); it != tileList.end(); ++it)
 	{
 		it->SetAsOccupied(false);
-		it->SetColor(sf::Color::White);
+		it->SetColor(defaultTileColor);
 	}
 }
 
@@ -309,20 +309,14 @@ void Grid::ValidateAllTiles()
 {
 	for (std::vector<Tile>::iterator it = tileList.begin(); it != tileList.end(); ++it)
 	{
-		if (it->IsOccupied())
+		if (it->IsOccupied() && !(IsValidMove(it->id)))
 		{
-			if (IsValidMove(it->id))
-			{
-				it->SetColor(sf::Color::White);
-			}
-			else
-			{
-				it->SetColor(sf::Color(255, 100, 100));
-			}
+			// Highlight red if marked and invalid
+			it->SetColor(sf::Color(255, 100, 100));
 		}
 		else
 		{
-			it->SetColor(sf::Color::White);
+			it->SetColor(defaultTileColor);
 		}
 	}
 }
